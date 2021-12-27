@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{## Start with  defaults from defaults.yaml ##}
+{% import_yaml 'testinfra/defaults.yaml' as default_settings %}
+
+{##
+Setup variable using grains['os_family'] based logic
+os_family specific settings are stored in defaults.yaml
+##}
+{% set os_family_map = salt['grains.filter_by']({
+        'Debian': {
+          'pkgs': ['python3-testinfra']
+         },
+  }
+  , grain="os_family"
+  , merge=salt['pillar.get']('testinfra:lookup'))
+%}
+{## Merge the flavor_map to the default settings ##}
+{% do default_settings.testinfra.update(os_family_map) %}
+
+{## Merge in testinfra:lookup pillar ##}
+{% 
+    set testinfra = salt['grains.filter_by'](
+        default_settings,
+        base='testinfra',
+        grain="os_family",
+        merge=salt['pillar.get']('testinfra:lookup')
+    ) 
+%}

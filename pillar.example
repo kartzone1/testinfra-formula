@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+testinfra:
+  lookup:
+    use_pip: false
+    use_distro_pkg: true
+    pippkgs:
+      - pyvmomi
+    pkgs:
+      - python3-testinfra
+      - python3-pyvmomi
+    scripts:
+      testinfra:
+        address: https://github.com/pytest-dev/pytest-testinfra.git
+      kartzone-demo:
+        address: https://gitea.kartzone.info/kartzone/kartzone-demo.git
+        revision: 'main'

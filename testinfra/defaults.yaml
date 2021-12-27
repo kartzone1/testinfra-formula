@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+testinfra:
+  use_pip: true
+  use_distro_pkg: false
+  pkgs:
+    - testinfra
+  path:
+    scripts: /srv/testinfra/scripts
